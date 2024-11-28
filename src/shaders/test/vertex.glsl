@@ -5,6 +5,9 @@ uniform mat4 modelMatrix;
 attribute vec3 position;
 attribute float aRandom;
 
+// how to use varying to send data to fragment shader file.
+varying float vRandom;
+
 void main()
 {
     // scrivendo gl_Position in questo modo ci da più controllo
@@ -17,7 +20,7 @@ void main()
 
     gl_Position = projectedPosition;
 
-    
+    vRandom = aRandom;
     // ==
     // gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
 }
