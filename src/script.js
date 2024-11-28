@@ -28,6 +28,16 @@ const textureLoader = new THREE.TextureLoader();
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
 
+// How to add our own attributes directly to the BufferGeometry
+const count = geometry.attributes.position.count;
+const randoms = new Float32Array(count);
+
+for (let i = 0; i < count; i++) {
+    randoms[i] = Math.random();
+}
+// Create aRandom attribute then later we call it in vertx.glsl
+geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 1));
+
 /******************************************************
  * Creare shader material con RawShaderMaterial
  */
