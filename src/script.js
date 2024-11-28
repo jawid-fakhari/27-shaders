@@ -47,10 +47,31 @@ const material = new THREE.RawShaderMaterial({
     vertexShader: testVertextShader,
     fragmentShader: testFragmentShader,
     //   wireframe: true,
+
+    // How to add uniforms to the material with the uniforms property
+    uniforms: {
+        uFrequency: { value: new THREE.Vector2(10, 5) }, //chiamato in vertex shader
+        uTime: { value: 0 }, //chiamto in vertex shader
+        uColor: { value: new THREE.Color("orange") }, //chiamato in frament shader
+    },
 });
+
+// gui Controllers
+gui.add(material.uniforms.uFrequency.value, "x")
+    .min(0)
+    .max(20)
+    .step(0.01)
+    .name("frequencyX");
+
+gui.add(material.uniforms.uFrequency.value, "y")
+    .min(0)
+    .max(20)
+    .step(0.01)
+    .name("frequencyY");
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
+mesh.scale.y = 2 / 3;
 scene.add(mesh);
 
 /**
@@ -108,6 +129,9 @@ const clock = new THREE.Clock();
 
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
+
+    // Update material
+    material.uniforms.uTime.value = elapsedTime;
 
     // Update controls
     controls.update();
